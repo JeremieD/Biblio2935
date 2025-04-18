@@ -30,7 +30,6 @@ class URIPath {
         this.parameters[param[0]] = decodeURIComponent(param[1].replaceAll("+", " "));
       }
     }
-    console.log(this.parameters);
   }
 }
 

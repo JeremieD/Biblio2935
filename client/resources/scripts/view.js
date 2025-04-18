@@ -59,31 +59,31 @@ whenDOMReady(() => {
     drawSearch();
   }, { passive: true });
 
-  V.search.title.addEventListener("change", () => {
+  V.search.title.addEventListener("input", () => {
     state.search.title = V.search.title.value.trim();
     getSearchResults();
     drawSearch();
   }, { passive: true });
 
-  V.search.author.addEventListener("change", () => {
+  V.search.author.addEventListener("input", () => {
     state.search.author = V.search.author.value.trim();
     getSearchResults();
     drawSearch();
   }, { passive: true });
 
-  V.search.publisher.addEventListener("change", () => {
+  V.search.publisher.addEventListener("input", () => {
     state.search.publisher = V.search.publisher.value.trim();
     getSearchResults();
     drawSearch();
   }, { passive: true });
 
-  V.search.dateFrom.addEventListener("change", () => {
+  V.search.dateFrom.addEventListener("input", () => {
     state.search.dateFrom = V.search.dateFrom.value;
     getSearchResults();
     drawSearch();
   }, { passive: true });
 
-  V.search.dateTo.addEventListener("change", () => {
+  V.search.dateTo.addEventListener("input", () => {
     state.search.dateTo = V.search.dateTo.value;
     getSearchResults();
     drawSearch();
@@ -165,12 +165,13 @@ function drawSearch() {
 
   state.searchResults.then(data => {
     V.search.results.innerHTML = "";
+    const p = document.createElement("p");
+    p.innerText = data.rowCount + " résutats.";
+    if (data.rowCount > 100) p.innerText += " Seuls les 100 premiers sont affichés.";
+    V.search.results.append(p);
     let n = 0;
     for (const book of data.rows) {
-      if (n > 100) {
-        V.search.results.append("Seulement les 100 premiers résultats sont affichés.");
-        break;
-      }
+      if (n > 100) break;
       V.search.results.append(bookRow(book));
       n++;
     }

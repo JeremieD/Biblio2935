@@ -58,12 +58,28 @@ async function processRequest(req, res) {
 
 // Fetch search results
 async function getSearchResults(query) {
-  console.log(query.q);
-  const q = `SELECT * FROM Livres
-             WHERE titre ILIKE '%${query.q}%'
-             OR auteur ILIKE '%${query.q}%'
-             OR editeur ILIKE '%${query.q}%'
-             ORDER BY titre`;
+  let q = "";
+  if (query.advanced === "true") {
+    let c = [];
+    q = "SELECT * FROM Livres\n";
+    if (query.titre) c.push(`titre ILIKE '%${query.titre}%'`);
+    if (query.auteur) c.push(`auteur ILIKE '%${query.auteur}%'`);
+    if (query.editeur) c.push(`editeur ILIKE '%${query.editeur}%'`);
+    if (query.genre) c.push(`genre='${query.genre}'`);
+    if (query.langue) c.push(`langue='${query.langue}'`);
+    if (query.de && query.a) { c.push(`annee BETWEEN ${query.de} AND ${query.a}`); }
+    else if (query.de) { c.push(`annee >= ${query.de}`); }
+    else if (query.a) { c.push(`annee <= ${query.a}`); }
+    if (c.length > 0) q += "WHERE ";
+    q += c.join("\nAND ");
+    q += "\nORDER BY titre";
+  } else {
+    q = `SELECT * FROM Livres
+         WHERE titre ILIKE '%${query.q}%'
+         OR auteur ILIKE '%${query.q}%'
+         OR editeur ILIKE '%${query.q}%'
+         ORDER BY titre`;
+  }
   return await db.query(q);
 }
 

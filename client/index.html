@@ -55,9 +55,9 @@
           <div class="field-group">
             <label for="search-date-from">Date de publication</label>
             <div class="date-range">
-              <input id="search-date-from" type="date" />
+              <input id="search-date-from" type="number" length="4", min="0" max="9999" />
               <span>→</span>
-              <input id="search-date-to" type="date" />
+              <input id="search-date-to" type="number" length="4", min="0" max="9999" />
             </div>
           </div>
 
@@ -65,11 +65,11 @@
             <label for="search-genre">Genre</label>
             <select id="search-genre">
               <option value=""></option>
-              <option value="fiction">Fiction</option>
-              <option value="documentaire">Documentaire</option>
-              <option value="reference">Référence</option>
-              <option value="fiction jeunesse">Fiction Jeunesse</option>
-              <option value="documentaire jeunesse">Documentaire Jeunesse</option>
+              <option value="Fiction">Fiction</option>
+              <option value="Documentaire">Documentaire</option>
+              <option value="Référence">Référence</option>
+              <option value="Fiction Jeunesse">Fiction Jeunesse</option>
+              <option value="Documentaire Jeunesse">Documentaire Jeunesse</option>
               </select>
           </div>
 

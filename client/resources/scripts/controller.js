@@ -28,6 +28,7 @@ function initController() {
 
 function getSearchResults() {
   const query = {
+    advanced: state.search.advanced,
     q: state.search.bar,
     titre: state.search.title,
     auteur: state.search.author,
@@ -35,6 +36,7 @@ function getSearchResults() {
     de: state.search.dateFrom,
     a: state.search.dateTo,
     genre: state.search.genre,
+    langue: state.search.language,
     excludeUnavailable: state.search.excludeUnavailable,
   };
   state.searchResults = httpGet("/api/search?" + new URLSearchParams(query).toString()).then(JSON.parse);
