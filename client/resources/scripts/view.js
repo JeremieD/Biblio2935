@@ -28,6 +28,10 @@ whenDOMReady(() => {
 
   V.stats.button = document.getElementById("stats-button");
   V.stats.section = document.getElementById("stats");
+  V.stats.livres = document.getElementById("stats-livres");
+  V.stats.adherents = document.getElementById("stats-adherents");
+  V.stats.emprunts = document.getElementById("stats-emprunts");
+  V.stats.retards = document.getElementById("stats-retards");
 
   V.questions.button = document.getElementById("questions-button");
   V.questions.section = document.getElementById("questions");
@@ -44,7 +48,7 @@ whenDOMReady(() => {
   }, { passive: true });
 
   V.search.toggle.addEventListener("click", () => {
-    state.search.toggle = !state.search.toggle;
+    state.search.advanced = !state.search.advanced;
     getSearchResults();
     drawSearch();
   }, { passive: true });
@@ -131,12 +135,16 @@ whenDOMReady(() => {
     getQ4();
     drawQ4();
   }, { passive: true });
+
+  initView();
 });
 
 
 function initView() {
   viewLoaded = true;
   dispatchEvent(new Event("viewLoaded"));
+  getSearchResults();
+  drawSearch();
 }
 
 function drawTabs() {
@@ -151,13 +159,12 @@ function drawTabs() {
 function drawSearch() {
   setLoading(true);
 
-  V.search.bar.disabled = !state.search.toggle;
-  V.search.toggle.classList.toggle("inverted", state.search.toggle);
-  V.search.advanced.classList.toggle("collapse", state.search.toggle);
-
-  V.search.results.innerHTML = "";
+  V.search.bar.disabled = state.search.advanced;
+  V.search.toggle.classList.toggle("inverted", !state.search.advanced);
+  V.search.advanced.classList.toggle("collapse", !state.search.advanced);
 
   state.searchResults.then(data => {
+    V.search.results.innerHTML = "";
     let n = 0;
     for (const book of data.rows) {
       if (n > 100) {
@@ -172,13 +179,26 @@ function drawSearch() {
 }
 
 function drawStats() {
-
+  setLoading(true);
+  state.stats.then(data => {
+    V.stats.livres.innerText = data.livres;
+    V.stats.adherents.innerText = data.adherents;
+    V.stats.emprunts.innerText = data.emprunts;
+    V.stats.retards.innerText = data.retards;
+    setLoading(false);
+  });
 }
 
 function drawQ1() {
   setLoading(true);
   state.questions[1].then(data => {
     V.questions.output.innerHTML = "";
+
+    const p = document.createElement("p");
+    p.innerText = "→ ";
+    V.questions.output.append(p);
+
+
 
     setLoading(false);
   });
@@ -189,6 +209,12 @@ function drawQ2() {
   state.questions[2].then(data => {
     V.questions.output.innerHTML = "";
 
+    const p = document.createElement("p");
+    p.innerText = "→ ";
+    V.questions.output.append(p);
+
+
+
     setLoading(false);
   });
 }
@@ -197,6 +223,11 @@ function drawQ3() {
   setLoading(true);
   state.questions[3].then(data => {
     V.questions.output.innerHTML = "";
+
+    const p = document.createElement("p");
+    p.innerText = "→ Quel est le titre et la date de publication des livres de Sylvain Tesson entre 2010 et 2020?";
+    V.questions.output.append(p);
+
     for (const row of data.rows) {
       V.questions.output.append(bookRow(row));
     }
@@ -209,6 +240,15 @@ function drawQ4() {
   state.questions[4].then(data => {
     V.questions.output.innerHTML = "";
 
+    const p = document.createElement("p");
+    p.innerText = "→ Quelle est la durée moyenne d’emprunt par adhérent?";
+    V.questions.output.append(p);
+
+    for (const row of data.rows) {
+      const el = document.createElement("li");
+      el.innerText += row.nom + ": " + round(row.avg, 1) + " jours";
+      V.questions.output.append(el);
+    }
     setLoading(false);
   });
 }
@@ -219,11 +259,50 @@ function setLoading(toggle) {
 
 function bookRow(book) {
   const el = document.createElement("li");
-  if (book.titre !== undefined) {
-    el.innerText += book.titre;
+  el.classList.add("book");
+
+  if (book.isbn) {
+    const isbnEl = document.createElement("span");
+    isbnEl.classList.add("isbn");
+    isbnEl.innerText = book.isbn;
+    el.append(isbnEl);
   }
-  if (book.annee !== undefined) {
-    el.innerText += ", " + book.annee;
+  if (book.titre) {
+    const titreEl = document.createElement("span");
+    titreEl.classList.add("titre");
+    titreEl.innerText = book.titre;
+    el.append(titreEl);
   }
+  if (book.auteur) {
+    const auteurEl = document.createElement("span");
+    auteurEl.classList.add("auteur");
+    auteurEl.innerText = book.auteur;
+    el.append(auteurEl);
+  }
+  if (book.editeur) {
+    const editeurEl = document.createElement("span");
+    editeurEl.classList.add("editeur");
+    editeurEl.innerText = book.editeur;
+    el.append(editeurEl);
+  }
+  if (book.annee) {
+    const anneeEl = document.createElement("span");
+    anneeEl.classList.add("annee");
+    anneeEl.innerText = book.annee;
+    el.append(anneeEl);
+  }
+  if (book.genre) {
+    const genreEl = document.createElement("span");
+    genreEl.classList.add("genre");
+    genreEl.innerText = book.genre;
+    el.append(genreEl);
+  }
+  if (book.langue) {
+    const langueEl = document.createElement("span");
+    langueEl.classList.add("langue");
+    langueEl.innerText = book.langue;
+    el.append(langueEl);
+  }
+
   return el;
 }

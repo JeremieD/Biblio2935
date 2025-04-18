@@ -27,9 +27,10 @@ class URIPath {
 
       for (const rawParam of rawParams) {
         const param = rawParam.split("=");
-        this.parameters[param[0]] = param[1];
+        this.parameters[param[0]] = decodeURIComponent(param[1].replaceAll("+", " "));
       }
     }
+    console.log(this.parameters);
   }
 }
 

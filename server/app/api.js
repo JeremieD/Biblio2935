@@ -22,7 +22,9 @@ async function processRequest(req, res) {
 
   } else if (path.pathname === "/api/stats") {
     // Stats query
-    return static.serve(req, res, getStats(), "application/json");
+    return await getStats().then(data => {
+      return static.serve(req, res, data, "application/json");
+    });
 
   } else if (path.pathname.startsWith("/api/questions/")) {
     // Question query
@@ -32,15 +34,21 @@ async function processRequest(req, res) {
     }
     switch (q) {
       case 1:
-        return static.serve(req, res, getQ1(), "application/json");
+        return await getQ1().then(data => {
+          return static.serve(req, res, data, "application/json");
+        });
       case 2:
-        return static.serve(req, res, getQ2(), "application/json");
+        return await getQ2().then(data => {
+          return static.serve(req, res, data, "application/json");
+        });
       case 3:
         return await getQ3().then(data => {
           return static.serve(req, res, data, "application/json");
         });
       case 4:
-        return static.serve(req, res, getQ4(), "application/json");
+        return await getQ4().then(data => {
+          return static.serve(req, res, data, "application/json");
+        });
     }
 
   } else {
@@ -50,6 +58,7 @@ async function processRequest(req, res) {
 
 // Fetch search results
 async function getSearchResults(query) {
+  console.log(query.q);
   const q = `SELECT * FROM Livres
              WHERE titre ILIKE '%${query.q}%'
              OR auteur ILIKE '%${query.q}%'
@@ -60,7 +69,20 @@ async function getSearchResults(query) {
 
 // Fetch data for stats page
 async function getStats() {
-  return {};
+  const q1 = `SELECT count(*) as n FROM Livres`;
+  const q2 = `SELECT count(*) as n FROM Adherents`;
+  const q3 = `SELECT count(*) as n FROM Emprunts`;
+  const q4 = `SELECT count(*) as n from Emprunts
+              WHERE date_retour - date_emprunt > 14
+              OR (date_retour=null) AND (CURRENT_DATE - date_emprunt > 14)`;
+  return await Promise.all([db.query(q1), db.query(q2), db.query(q3), db.query(q4)]).then(data => {
+    return {
+      livres: data[0].rows[0].n,
+      adherents: data[1].rows[0].n,
+      emprunts: data[2].rows[0].n,
+      retards: data[3].rows[0].n
+    };
+  });
 }
 
 // Fetch question 1 answer
@@ -83,7 +105,10 @@ async function getQ3() {
 
 // Fetch question 4 answer
 async function getQ4() {
-  return {};
+  const q = `SELECT nom, AVG(duree)
+             FROM adherents NATURAL JOIN (SELECT adherent_id, (date_retour - date_emprunt) AS duree FROM emprunts)
+             GROUP BY nom`;
+  return await db.query(q);
 }
 
 module.exports = { processRequest };

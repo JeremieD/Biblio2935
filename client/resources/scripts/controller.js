@@ -5,8 +5,8 @@
 const state = {
   currentTab: "search",
   search: {
-    advanced: true,
-    text: "",
+    advanced: false,
+    bar: "",
     title: "",
     author: "",
     publisher: "",
@@ -41,9 +41,7 @@ function getSearchResults() {
 }
 
 function getStats() {
-  httpGet("/api/stats").then(data => {
-    state.stats = JSON.parse(data);
-  });
+  state.stats = httpGet("/api/stats").then(JSON.parse);
 }
 
 function getQ1() {

@@ -37,3 +37,8 @@ async function httpGet(url) {
     httpRequest.send();
   });
 }
+
+function round(n, p) {
+  const f = 10**p;
+  return Math.round(n*f) / f;
+}

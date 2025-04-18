@@ -34,9 +34,9 @@
   <main>
     <section id="search" class="selected">
       <header>
-        <div class="search-input"><jd-icon icon="search"></jd-icon><input id="search-bar" class="seamless" type="search" placeholder="Rechercher..." disabled/></div>
-        <button id="search-toggle"><jd-icon icon="chevron-up"></jd-icon></button>
-        <div id="search-advanced" class="">
+        <div class="search-input"><jd-icon icon="search"></jd-icon><input id="search-bar" class="seamless" type="search" placeholder="Rechercher..." value =""/></div>
+        <button id="search-toggle" class="inverted"><jd-icon icon="chevron-up"></jd-icon></button>
+        <div id="search-advanced" class="collapse">
           <div class="field-group">
             <label for="search-title">Titre</label>
             <input id="search-title" type="text" />
@@ -88,23 +88,23 @@
           </div>
         </div>
       </header>
-      <ol id="search-results"></ol>
+      <ol id="search-results" class="book-list"></ol>
     </section>
 
     <section id="stats">
       <h2>Statistiques générales</h2>
 
+      <label>Nombre de livres</label>
+      <output id="stats-livres">18000</output>
+
       <label>Nombre d’adhérents</label>
-      <output id=""></output>
+      <output id="stats-adherents">7</output>
 
       <label>Nombre d’emprunts</label>
-      <output id=""></output>
+      <output id="stats-emprunts">100</output>
 
       <label>Nombre de retards</label>
-      <output id=""></output>
-
-      <label>Nombre de livres</label>
-      <output id=""></output>
+      <output id="stats-retards">25</output>
     </section>
 
     <section id="questions">
@@ -116,7 +116,7 @@
         <button id="questions-q3" class="button">Question #3</button>
         <button id="questions-q4" class="button">Question #4</button>
       </div>
-      <output id="questions-output"></output>
+      <output id="questions-output" class="book-list"></output>
     </section>
   </main>
 
