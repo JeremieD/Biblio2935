@@ -1,0 +1,126 @@
+<!doctype html>
+<html dir="ltr" lang="fr-CA">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>IFT2935 – Équipe #19</title>
+  <meta name="description" content="Démonstration de l’équipe #19 pour le projet final du cours IFT2935.">
+  <meta name="author" content="Jérémie Dupuis">
+
+  <!-- Style -->
+  <link rel="stylesheet" href="/resources/style/power.css">
+  <link rel="stylesheet" href="/resources/style/main.css">
+
+  <!-- Scripts -->
+  <script src="/resources/scripts/utilities.js"></script>
+  <script src="/resources/scripts/controller.js"></script>
+  <script src="/resources/scripts/view.js"></script>
+  <script src="/resources/scripts/icon.js"></script>
+</head>
+
+<body>
+  <header>
+    <div id="spinner" title="L’application communique avec la base de données."><jd-icon icon="spinner"></jd-icon></div>
+    <h1>Biblio2935</h1>
+    <nav>
+      <button id="search-button" class="selected">Recherche</button>
+      <button id="stats-button">Statistiques</button>
+      <button id="questions-button">Questions</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="search" class="selected">
+      <header>
+        <div class="search-input"><jd-icon icon="search"></jd-icon><input id="search-bar" class="seamless" type="search" placeholder="Rechercher..." disabled/></div>
+        <button id="search-toggle"><jd-icon icon="chevron-up"></jd-icon></button>
+        <div id="search-advanced" class="">
+          <div class="field-group">
+            <label for="search-title">Titre</label>
+            <input id="search-title" type="text" />
+          </div>
+
+          <div class="field-group">
+            <label for="search-author">Auteur</label>
+            <input id="search-author" type="text" />
+          </div>
+
+          <div class="field-group">
+            <label for="search-publisher">Éditeur</label>
+            <input id="search-publisher" type="text" />
+          </div>
+
+          <div class="field-group">
+            <label for="search-date-from">Date de publication</label>
+            <div class="date-range">
+              <input id="search-date-from" type="date" />
+              <span>→</span>
+              <input id="search-date-to" type="date" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="search-genre">Genre</label>
+            <select id="search-genre">
+              <option value=""></option>
+              <option value="fiction">Fiction</option>
+              <option value="documentaire">Documentaire</option>
+              <option value="reference">Référence</option>
+              <option value="fiction jeunesse">Fiction Jeunesse</option>
+              <option value="documentaire jeunesse">Documentaire Jeunesse</option>
+              </select>
+          </div>
+
+          <div class="field-group">
+            <label for="search-language">Langue</label>
+            <select id="search-language">
+              <option value=""></option>
+              <option value="fr">Français</option>
+              <option value="en">Anglais</option>
+              </select>
+          </div>
+
+          <div class="checkbox-group">
+            <input id="search-exclude-unavailable" type="checkbox" />
+            <label for="search-exclude-unavailable">Exclure les livres non disponibles</label>
+          </div>
+        </div>
+      </header>
+      <ol id="search-results"></ol>
+    </section>
+
+    <section id="stats">
+      <h2>Statistiques générales</h2>
+
+      <label>Nombre d’adhérents</label>
+      <output id=""></output>
+
+      <label>Nombre d’emprunts</label>
+      <output id=""></output>
+
+      <label>Nombre de retards</label>
+      <output id=""></output>
+
+      <label>Nombre de livres</label>
+      <output id=""></output>
+    </section>
+
+    <section id="questions">
+      <h2>Questions</h2>
+      <p>Cliquez sur un bouton pour afficher le résultat de la requête correspondante.</p>
+      <div>
+        <button id="questions-q1" class="button">Question #1</button>
+        <button id="questions-q2" class="button">Question #2</button>
+        <button id="questions-q3" class="button">Question #3</button>
+        <button id="questions-q4" class="button">Question #4</button>
+      </div>
+      <output id="questions-output"></output>
+    </section>
+  </main>
+
+  <footer></footer>
+</body>
+
+</html>

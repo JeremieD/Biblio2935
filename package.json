@@ -1,0 +1,15 @@
+{
+  "name": "biblio2935",
+  "version": "1.0.0",
+  "description": "Dans le cadre du cours IFT2935.",
+  "main": "server.js",
+  "scripts": {
+    "init": "node init.js",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.14.1"
+  }
+}

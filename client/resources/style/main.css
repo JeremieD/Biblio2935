@@ -1,0 +1,230 @@
+:root {
+  /* Color variables */
+  --color-dark1: #111;
+  --color-dark2: #161616;
+  --color-dark3: #1C1C1C;
+  --color-dark4: #222;
+  --color-dark5: #282828;
+  --color-dark6: #383838;
+  --color-grey: #777;
+  --color-light6: #C8C8C8;
+  --color-light5: #D4D4D4;
+  --color-light4: #DBDBDB;
+  --color-light3: #E3E3E3;
+  --color-light2: #E8E8E8;
+  --color-light1: #EEE;
+  --color-purple: #83F;
+  --color-blue: #25F;
+  --color-cyan: #1BC;
+  --color-green: #1A1;
+  --color-yellow: #DB3;
+  --color-orange: #E82;
+  --color-red: #D33;
+  --color-pink: #E4A;
+
+  /* Semantic colors */
+  --color-background: var(--color-light1);
+  --color-foreground: var(--color-light3);
+  --color-interactive: var(--color-light5);
+  --color-inverse: var(--color-dark5);
+  --color-text: var(--color-dark1);
+  --color-subdued: var(--color-grey);
+  --color-accent: var(--color-purple);
+  --color-positive: var(--color-green);
+  --color-negative: var(--color-red);
+
+  /* Other variables */
+  --max-width: 40rem;
+
+  /* Root styling */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 16px;
+  color: var(--color-text);
+  background: var(--color-background);
+  user-select: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--color-dark1);
+    --color-foreground: var(--color-dark3);
+    --color-interactive: var(--color-dark5);
+    --color-inverse: var(--color-light5);
+    --color-text: var(--color-light1);
+  }
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  display: grid;
+  gap: 2rem;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 2rem auto 0;
+  flex-grow: 1;
+}
+
+body>header {
+  position: relative;
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 4rem;
+  padding: 0 calc((100vw - var(--max-width)) / 2);
+  background-color: var(--color-foreground);
+  border-bottom: 2px solid var(--color-interactive);
+
+  h1 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  nav {
+    display: flex;
+    gap: 1rem;
+    button { position: relative; }
+    .selected::after {
+      position: absolute;
+      content: "";
+      display: block;
+      width: 3ch;
+      height: 1px;
+      left: 50%;
+      translate: -50% .325em;
+      background-color: currentColor;
+    }
+  }
+}
+
+#spinner {
+  position: absolute;
+  translate: calc(-100% - .5em);
+  transition: .2s .1s ease opacity;
+  &:not(.selected) {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+body>footer {
+  width: 100%;
+  max-width: var(--max-width);
+}
+
+section:not(.selected) { display: none; }
+
+jd-icon {
+  display: inline-block;
+  line-height: 0;
+  vertical-align: -.1666em;
+  height: 1.125em;
+  svg {
+    width: 1em;
+    height: 100%;
+    overflow: visible;
+  }
+}
+
+input, select { display: block; }
+input { width: 100%; }
+::placeholder { color: var(--color-grey); }
+
+#search>header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+}
+
+.search-input {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  height: 2.5em;
+  padding: .5em .66em;
+  background-color: var(--color-interactive);
+  border-radius: 8px;
+  font-size: 1.25rem;
+  display: flex;
+}
+
+#search-toggle {
+  padding: 0 .25em;
+}
+
+#search-advanced {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  gap: .75em;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--color-interactive);
+  overflow: hidden;
+  max-height: 100vh;
+  transition: .3s ease max-height,
+              .3s ease padding !important;
+}
+
+.collapse {
+  max-height: 0 !important;
+  padding: 0 !important;
+}
+
+label { font-size: .875rem; }
+
+input, select {
+  display: inline-block;
+  width: 100%;
+  padding: .33em .66em;
+  background-color: var(--color-interactive);
+  border-radius: 4px;
+}
+
+input[type="checkbox"] {
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0;
+  border-color: var(--color-text);
+  &:checked {
+    background-color: var(--color-text);
+    border: 6px solid var(--color-interactive);
+  }
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: .25em;
+}
+
+.date-range {
+  display: flex;
+  gap: .5em;
+  align-items: center;
+}
+
+.checkbox-group {
+  display: flex;
+  gap: .5em;
+  align-items: center;
+}
+
+.button {
+  display: inline-block;
+  padding: .5em .75em;
+  background-color: var(--color-interactive);
+  border-radius: 4px;
+}
+
+:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
