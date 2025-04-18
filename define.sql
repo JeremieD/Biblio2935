@@ -18,22 +18,14 @@ CREATE TABLE Livres (
   langue char(2)
 );
 
-CREATE TABLE Exemplaires (
-  isbn numeric(13, 0),
-  numero smallserial,
-  PRIMARY KEY (isbn, numero),
-  FOREIGN KEY (isbn) REFERENCES Livres(isbn)
-);
-
 CREATE TABLE Emprunts (
   emprunt_id serial PRIMARY KEY,
   adherent_id serial,
   isbn numeric(13, 0) NOT NULL,
-  numero smallserial,
   date_emprunt date NOT NULL,
   date_retour date,
   FOREIGN KEY (adherent_id) REFERENCES Adherents(adherent_id),
-  FOREIGN KEY (ISBN, Numero) REFERENCES Exemplaires(isbn, numero)
+  FOREIGN KEY (isbn) REFERENCES Livres(isbn)
 );
 
 CREATE TABLE Commandes (
