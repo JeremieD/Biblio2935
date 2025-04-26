@@ -1,5 +1,0 @@
-/*
- * Démonstration des requêtes
- */
-
-select

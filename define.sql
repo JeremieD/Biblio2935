@@ -27,12 +27,3 @@ CREATE TABLE Emprunts (
   FOREIGN KEY (adherent_id) REFERENCES Adherents(adherent_id),
   FOREIGN KEY (isbn) REFERENCES Livres(isbn)
 );
-
-CREATE TABLE Commandes (
-  commande_id serial PRIMARY KEY,
-  adherent_id serial,
-  isbn numeric(13, 0) NOT NULL,
-  statut varchar(16) NOT NULL default 'Demandé',
-  FOREIGN KEY (adherent_id) REFERENCES Adherents(adherent_id),
-  FOREIGN KEY (isbn) REFERENCES Livres(isbn)
-);

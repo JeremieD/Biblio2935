@@ -3,11 +3,11 @@ const static = require("../web/static.js");
 const { Client } = require("pg");
 
 const db = new Client({
-  user: "postgres",
-  password: "postgres",
-  host: "localhost",
+  user: process.env.POSTGRES_USER || "postgres",
+  password: process.env.POSTGRES_PASSWORD || "postgres",
+  host: "db",
   port: 5432,
-  database: "postgres"
+  database: process.env.POSTGRES_DB || "postgres"
 });
 db.connect();
 

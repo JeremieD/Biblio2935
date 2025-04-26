@@ -1,6 +1,4 @@
 {
-  "localHostname": "localhost",
-  "localPort": 8200,
   "compressionEnabled": true,
   "mimeTypes": {
     "html": "text/html",
