@@ -2,6 +2,8 @@
  * Script de création des tables.
  */
 
+DROP TABLE IF EXISTS Emprunts, Livres, Adherents;
+
 CREATE TABLE Adherents (
   adherent_id serial PRIMARY KEY,
   nom varchar(255),

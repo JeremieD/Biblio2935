@@ -1,18 +1,32 @@
 const uri = require("../util/uri.js");
 const static = require("../web/static.js");
+const fs = require("fs");
 const { Client } = require("pg");
 
-const db = new Client({
-  user: process.env.POSTGRES_USER || "postgres",
-  password: process.env.POSTGRES_PASSWORD || "postgres",
-  host: "db",
-  port: 5432,
-  database: process.env.POSTGRES_DB || "postgres"
-});
-db.connect();
+let db;
+
+// Reset and init
+async function init() {
+  db = new Client({
+    user: process.env.POSTGRES_USER || "postgres",
+    password: process.env.POSTGRES_PASSWORD || "postgres",
+    host: "db",
+    port: 5432,
+    database: process.env.POSTGRES_DB || "postgres"
+  });
+  db.connect();
+
+  const q1 = fs.readFileSync(`./define.sql`, "utf8");
+  const q2 = fs.readFileSync(`./populate.sql`, "utf8");
+  return db.query(q1)
+    .then(() => db.query(q2))
+    .catch(console.error);
+}
 
 //
 async function processRequest(req, res) {
+  if (!db) await init();
+
   const path = new uri.URIPath(req.url);
   if (path.pathname === "/api/search") {
     // Search query
