@@ -23,7 +23,6 @@ whenDOMReady(() => {
   V.search.dateTo = document.getElementById("search-date-to");
   V.search.genre = document.getElementById("search-genre");
   V.search.language = document.getElementById("search-language");
-  V.search.excludeUnavailable = document.getElementById("search-exclude-unavailable");
   V.search.results = document.getElementById("search-results");
 
   V.stats.button = document.getElementById("stats-button");
@@ -97,12 +96,6 @@ whenDOMReady(() => {
 
   V.search.language.addEventListener("change", () => {
     state.search.language = V.search.language.value;
-    getSearchResults();
-    drawSearch();
-  }, { passive: true });
-
-  V.search.excludeUnavailable.addEventListener("change", () => {
-    state.search.excludeUnavailable = V.search.excludeUnavailable.checked;
     getSearchResults();
     drawSearch();
   }, { passive: true });
@@ -211,11 +204,12 @@ function drawQ2() {
     V.questions.output.innerHTML = "";
 
     const p = document.createElement("p");
-    p.innerText = "→ ";
+    p.innerText = "→ Quels sont les livres les plus empruntés du genre “fiction”?";
     V.questions.output.append(p);
 
-
-
+    for (const row of data.rows) {
+      V.questions.output.append(bookRow(row));
+    }
     setLoading(false);
   });
 }
@@ -303,6 +297,12 @@ function bookRow(book) {
     langueEl.classList.add("langue");
     langueEl.innerText = book.langue;
     el.append(langueEl);
+  }
+  if (book.count) {
+    const countEl = document.createElement("span");
+    countEl.classList.add("count");
+    countEl.innerText = "emprunté " + book.count + " fois";
+    el.append(countEl);
   }
 
   return el;

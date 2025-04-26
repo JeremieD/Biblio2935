@@ -36,8 +36,7 @@ function getSearchResults() {
     de: state.search.dateFrom,
     a: state.search.dateTo,
     genre: state.search.genre,
-    langue: state.search.language,
-    excludeUnavailable: state.search.excludeUnavailable,
+    langue: state.search.language
   };
   state.searchResults = httpGet("/api/search?" + new URLSearchParams(query).toString()).then(JSON.parse);
 }

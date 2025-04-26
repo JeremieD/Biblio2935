@@ -122,7 +122,12 @@ async function getQ1() {
 
 // Fetch question 2 answer
 async function getQ2() {
-  return {};
+  const q = `SELECT isbn, titre, auteur, editeur, annee, langue, count(*)
+             FROM Livres NATURAL JOIN Emprunts
+             WHERE genre='Fiction'
+             GROUP BY isbn
+             ORDER BY count DESC`;
+  return await db.query(q);
 }
 
 // Fetch question 3 answer

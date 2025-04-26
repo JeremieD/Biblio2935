@@ -132,7 +132,7 @@ jd-icon {
   }
 }
 
-input, select { display: block; }
+input, select { display: block; appearance: auto; }
 input { width: 100%; }
 ::placeholder { color: var(--color-grey); }
 
@@ -186,17 +186,6 @@ input, select {
   border-radius: 4px;
 }
 
-input[type="checkbox"] {
-  width: 1.5em;
-  height: 1.5em;
-  padding: 0;
-  border-color: var(--color-text);
-  &:checked {
-    background-color: var(--color-text);
-    border: 6px solid var(--color-interactive);
-  }
-}
-
 .field-group {
   display: flex;
   flex-direction: column;
@@ -204,12 +193,6 @@ input[type="checkbox"] {
 }
 
 .date-range {
-  display: flex;
-  gap: .5em;
-  align-items: center;
-}
-
-.checkbox-group {
   display: flex;
   gap: .5em;
   align-items: center;
@@ -252,8 +235,8 @@ input[type="checkbox"] {
     font-weight: bold;
   }
   .auteur { }
-  .editeur, .annee, .genre, .langue { color: var(--color-grey); }
-  :is(.auteur, .editeur, .annee, .genre, .langue) + :is(.auteur, .editeur, .annee, .genre, .langue)::before {
+  .editeur, .annee, .genre, .langue, .count { color: var(--color-grey); }
+  :is(.auteur, .editeur, .annee, .genre, .langue, .count) + :is(.auteur, .editeur, .annee, .genre, .langue, .count)::before {
     content: "•";
     position: absolute;
     translate: calc(-.5em - 50%);
