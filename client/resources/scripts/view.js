@@ -207,7 +207,7 @@ function drawQ2() {
     V.questions.output.innerHTML = "";
 
     const p = document.createElement("p");
-    p.innerText = "→ Quels sont les livres les plus empruntés du genre “fiction”?";
+    p.innerText = "→ Quels sont les livres de fiction les plus empruntés?";
     V.questions.output.append(p);
 
     for (const row of data.rows) {
@@ -223,7 +223,7 @@ function drawQ3() {
     V.questions.output.innerHTML = "";
 
     const p = document.createElement("p");
-    p.innerText = "→ Quel est le titre et la date de publication des livres de Sylvain Tesson entre 2010 et 2020?";
+    p.innerText = "→ Quel est le titre et la date de publication des livres de Sylvain Tesson publiés entre 2010 et 2020?";
     V.questions.output.append(p);
 
     for (const row of data.rows) {

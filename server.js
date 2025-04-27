@@ -44,5 +44,5 @@ const server = http.createServer(requestListener);
 const localHostname = "0.0.0.0";
 const localPort = 8200;
 server.listen(localPort, localHostname, () => {
-  console.log(`Server is running on http://${localHostname}:${localPort}`);
+  console.log(`Server is running.`);
 });

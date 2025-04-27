@@ -4,16 +4,12 @@
     "html": "text/html",
     "css": "text/css",
     "js": "application/javascript",
-    "svg": "image/svg+xml",
-    "woff2": "font/woff2",
-    "png": "image/png"
+    "svg": "image/svg+xml"
   },
   "cachePolicies": {
     "html": "no-cache, private",
     "css": "no-cache",
     "js": "no-cache",
-    "svg": "no-cache",
-    "woff2": "no-cache",
-    "png": "no-cache"
+    "svg": "no-cache"
   }
 }
