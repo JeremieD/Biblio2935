@@ -189,11 +189,14 @@ function drawQ1() {
     V.questions.output.innerHTML = "";
 
     const p = document.createElement("p");
-    p.innerText = "→ ";
+    p.innerText = "→ Quels sont les abonnés ayant actuellement emprunté au moins un livre documentaire en français et publié avant 2010?";
     V.questions.output.append(p);
 
-
-
+    for (const row of data.rows) {
+      const el = document.createElement("li");
+      el.innerText += row.nom + ": " + round(row.count, 1) + " emprunts";
+      V.questions.output.append(el);
+    }
     setLoading(false);
   });
 }

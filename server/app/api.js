@@ -117,7 +117,11 @@ async function getStats() {
 
 // Fetch question 1 answer
 async function getQ1() {
-  return {};
+  const q = `SELECT nom, count(*)
+             FROM Adherents NATURAL JOIN Emprunts NATURAL JOIN Livres
+             WHERE langue='fr' AND genre='Documentaire' AND annee<2010
+             GROUP BY adherent_id`;
+  return await db.query(q);
 }
 
 // Fetch question 2 answer
