@@ -119,7 +119,7 @@ async function getStats() {
 async function getQ1() {
   const q = `SELECT nom, count(*)
              FROM Adherents NATURAL JOIN Emprunts NATURAL JOIN Livres
-             WHERE langue='fr' AND genre='Documentaire' AND annee<2010
+             WHERE langue='fr' AND genre='Documentaire' AND date_retour IS NULL
              GROUP BY adherent_id`;
   return await db.query(q);
 }
@@ -138,7 +138,8 @@ async function getQ2() {
 async function getQ3() {
   const q = `SELECT titre, annee FROM livres
              WHERE auteur='Tesson, Sylvain'
-             AND annee BETWEEN 2010 AND 2020`;
+             AND annee BETWEEN 2010 AND 2020
+             ORDER BY annee`;
   return await db.query(q);
 }
 
@@ -146,7 +147,8 @@ async function getQ3() {
 async function getQ4() {
   const q = `SELECT nom, AVG(duree)
              FROM adherents NATURAL JOIN (SELECT adherent_id, (date_retour - date_emprunt) AS duree FROM emprunts)
-             GROUP BY nom`;
+             GROUP BY adherent_id
+             ORDER BY avg`;
   return await db.query(q);
 }
 

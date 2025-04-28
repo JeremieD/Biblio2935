@@ -36,5 +36,7 @@ CREATE TABLE Commandes (
   isbn NUMERIC (13, 0) NOT NULL,
   statut VARCHAR(255) DEFAULT 'Initiée',
   date_creation DATE DEFAULT CURRENT_DATE NOT NULL,
-  date_maj DATE
+  date_maj DATE,
+  FOREIGN KEY (adherent_id) REFERENCES Adherents(adherent_id),
+  FOREIGN KEY (isbn) REFERENCES Livres(isbn)
 );
